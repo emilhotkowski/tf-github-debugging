@@ -41,24 +41,24 @@ data "aws_iam_policy_document" "lambdas-ci" {
     ]
   }
 
-  statement {
-    sid = "ReadWriteAccessToTerraformState"
-    effect = "Allow"
-    actions = [
-      "s3:ListBucket",
-      "s3:ListBucketMultipartUploads",
-      "s3:AbortMultipartUpload",
-      "s3:GetObject",
-      "s3:GetObjects",
-      "s3:DeleteObject",
-      "s3:DeleteObjects",
-      "s3:PutObject",
-      "s3:PutObjects"
-    ]
-    resources = [
-      "arn:aws:s3:::${var.lambdas_s3_state_bucket}/${var.github_debugging_lambdas_s3_state}",
-    ]
-  }
+//  statement {
+//    sid = "ReadWriteAccessToTerraformState"
+//    effect = "Allow"
+//    actions = [
+//      "s3:ListBucket",
+//      "s3:ListBucketMultipartUploads",
+//      "s3:AbortMultipartUpload",
+//      "s3:GetObject",
+//      "s3:GetObjects",
+//      "s3:DeleteObject",
+//      "s3:DeleteObjects",
+//      "s3:PutObject",
+//      "s3:PutObjects"
+//    ]
+//    resources = [
+//      "arn:aws:s3:::${var.lambdas_s3_state_bucket}/${var.github_debugging_lambdas_s3_state}",
+//    ]
+//  }
 
   # Lambda functions CANNOT use prefix-based wildcard permissions.
   # https://docs.aws.amazon.com/lambda/latest/dg/API_AddPermission.html#SSS-AddPermission-request-FunctionName

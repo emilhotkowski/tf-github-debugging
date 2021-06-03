@@ -1,4 +1,10 @@
 exports.handler =  async function(event, context) {
-    console.log("EVENT: \n" + JSON.stringify(event, null, 2))
-    return "Hello from Lambda"
+    return {
+        statusCode: 200,
+        headers: {
+            "content-type": "text/html"
+        },
+        body: "Hello from GithubDebugging!",
+        isBase64Encoded: true
+    }
 }

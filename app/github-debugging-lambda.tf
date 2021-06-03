@@ -54,7 +54,7 @@ resource "aws_lambda_permission" "github-debugging-lambda-api-gw" {
 resource "aws_api_gateway_resource" "github-debugging-lambda-api-proxy" {
   rest_api_id = aws_api_gateway_rest_api.github-debugging-lambda-api.id
   parent_id   = aws_api_gateway_rest_api.github-debugging-lambda-api.root_resource_id
-  path_part   = "{proxy+}"
+  path_part   = "test"
 }
 
 resource "aws_api_gateway_method" "github-debugging-lambda-api-resource" {
@@ -62,10 +62,6 @@ resource "aws_api_gateway_method" "github-debugging-lambda-api-resource" {
   resource_id   = aws_api_gateway_resource.github-debugging-lambda-api-proxy.id
   http_method   = "ANY"
   authorization = "NONE"
-
-  request_parameters = {
-    "method.request.path.proxy" = true
-  }
 }
 
 resource "aws_api_gateway_integration" "github-debugging-lambda-api_integration" {
