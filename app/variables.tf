@@ -10,5 +10,5 @@ variable "project_name" {
 
 variable "app_zip_location" {
     type = string
-    default = "build.zip"
+    default = "../../app/build.zip"
 }
