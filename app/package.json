@@ -1,0 +1,19 @@
+{
+  "name": "@swing-dev/app",
+  "version": "1.0.0",
+  "description": "Example app for POC",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emilhotkowski/tf-github-debugging.git"
+  },
+  "author": "Emil Hotkowski",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/emilhotkowski/tf-github-debugging/issues"
+  },
+  "homepage": "https://github.com/emilhotkowski/tf-github-debugging#readme"
+}

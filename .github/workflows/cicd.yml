@@ -1,0 +1,48 @@
+name: Deploy the lambda
+
+on:
+  push:
+    branches: [ master, develop, stg, prod ]
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Out Repo 
+        uses: actions/checkout@v2
+      
+      - name: Set the stage for dev
+        if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master'
+        run: |
+          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_DEV }}" >> $GITHUB_ENV
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}" >> $GITHUB_ENV
+          echo "TF_DIR=dev" >> $GITHUB_ENV
+          echo "Dev. deployment commencing..."
+          
+      - name: Set the stage for prod
+        if: github.ref == 'refs/heads/prod'
+        run: |
+          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_PROD }}" >> $GITHUB_ENV
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}" >> $GITHUB_ENV
+          echo "TF_DIR=prod" >> $GITHUB_ENV
+          echo "Production deployment commencing..."
+
+      - name: Zip the github-debugging lambda
+        run: |
+            cd ./app
+            zip build.zip index.js
+            cd ../
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.3
+
+      - name: Deploy the github-debugging lambda
+        run: |
+          cd ./deployment/${{env.TF_DIR}}
+
+          terraform init
+          terraform apply -auto-approve -target=module.github-debugging
+
+          cd ../..
